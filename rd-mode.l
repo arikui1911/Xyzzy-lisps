@@ -1,4 +1,4 @@
-;;; -*- Mode: Lisp; Package: RD-MODE; encoding: sjis -*-
+;;; -*- Mode: Lisp; Package: RD; encoding: sjis -*-
 ;;; 
 ;;; This files is not part of xyzzy.
 ;;;
@@ -7,7 +7,7 @@
 ;;; 
 ;;; == Install
 ;;; 
-;;; (1) Put remember.l on /site-lisp
+;;; (1) Put rd-mode.l on /site-lisp
 ;;; (2) At .xyzzy
 ;;;     
 ;;;      (require "rd-mode")
@@ -26,8 +26,6 @@
 ;;; Distributes under following terms (modified BSD license):
 ;;;
 ;;;
-;;; This files is not part of xyzzy.
-;;;
 ;;; Copyright (c) 2009, arikui <arikui.ruby@gmail.com>
 ;;; All rights reserved.
 ;;;
@@ -39,7 +37,7 @@
 ;;;  * Redistributions in binary form must reproduce the above copyright notice,
 ;;;    this list of conditions and the following disclaimer in the documentation
 ;;;    and/or other materials provided with the distribution.
-;;;  * Neither the name of the arikui-remember nor the names of its contributors
+;;;  * Neither the name of the arikui-rd-mode nor the names of its contributors
 ;;;    may be used to endorse or promote products derived from this software
 ;;;    without specific prior written permission.
 ;;;
@@ -56,12 +54,12 @@
 ;;; POSSIBILITY OF SUCH DAMAGE.
 ;;;
 
-(provide "rd-mode")
+(provide "rd")
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (unless (find-package "rd-mode") (defpackage "rd-mode")))
-(in-package "rd-mode")
+  (unless (find-package "rd") (defpackage "rd")))
+(in-package "rd")
 (use-package "editor")
-(use-package "rd-mode" "user")
+(use-package "rd" "user")
 
 (export '(rd-mode
           *rd-mode-hook*
