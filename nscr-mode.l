@@ -60,8 +60,10 @@
 	  *nscr-mode-abbrev-table*
 	  nscr-mode-auto-boot-on-find-file-if-find-nscr-executable
 	  *nscr-prog*
+	  *nscr-indent-column*
 	  nscr-run
 	  ))
+
 
 ;; public special variables
 (defvar *nscr-mode-hook*         nil         "Hook for nscr-mode")
@@ -69,9 +71,11 @@
 (defvar *nscr-mode-syntax-table* nil         "Syntax table for nscr-mode")
 (defvar *nscr-mode-abbrev-table* nil         "Abbrev table for nscr-mode")
 (defvar *nscr-prog*              "nscr.exe"  "NScripter executable basename")
+(defvar *nscr-indent-column*     4           "NScripter script's indent unit")
 
 (unless *nscr-mode-map*
   (let ((m (make-sparse-keymap)))
+    (define-key m #\TAB 'do-indent)
     (setf *nscr-mode-map* m)))
 
 (unless *nscr-mode-syntax-table*
@@ -82,6 +86,7 @@
     (set-syntax-end-comment s #\LFD nil t)
     (set-syntax-word s #\_)
     (setf *nscr-mode-syntax-table* s)))
+
 
 ;; private special variables
 (defvar *keywords*            nil)
@@ -107,6 +112,20 @@
       ("([^)/]+/[^)]+)" nil 9)
       ))))
 
+
+(defun do-indent ()
+  (interactive)
+  (save-excursion
+    (let (bol col)
+      (beginning-of-line)
+      (setf bol (point))
+      (skip-chars-forward " \t")
+      (setf col (if (looking-for "*") 0 *nscr-indent-column*))
+      (unless (= col (- (point) bol))
+	(delete-trailing-spaces)
+	(indent-to col)))))
+
+
 (defun nscr-mode ()
   "Major mode for editing NScripter scripts."
   (interactive)
@@ -118,8 +137,10 @@
   (ready-keywords)
   (make-local-variable 'regexp-keyword-list)
   (setf regexp-keyword-list *regexp-keyword-list*)
-  ;;
+  (make-local-variable 'mode-specific-indent-command)
+  (setf mode-specific-indent-command 'do-indent)
   (run-hooks *nscr-mode-hook*))
+
 
 (defun nscr-mode-auto-boot-on-find-file-if-find-nscr-executable ()
   "Suppose to be added to *find-file-hooks*; run nscr-mode if
