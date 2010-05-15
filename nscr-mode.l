@@ -1,10 +1,47 @@
-;;; -*- Mode: Lisp; Package: NSCRIPTER -*-
-;;;
-;;; This files is not part of xyzzy.
-;;;
-
-;;; (add-hook '*find-file-hooks* 'nscr-mode-auto-boot-on-find-file-if-find-nscr-executable)
-
+;; -*- Mode: Lisp; Package: NSCRIPTER -*-
+;;
+;; This files is not part of xyzzy.
+;;
+;; = nscr-mode
+;;
+;; == Install
+;;
+;; (1) Put nscr-mode.l on /site-lisp
+;; (2) At ~/.xyzzy
+;;      (require "nscr-mode")
+;;      (add-hook '*find-file-hooks* 'nscr-mode-auto-boot-on-find-file-if-find-nscr-executable)
+;;
+;; == License
+;;
+;; Distributes under following terms (modified BSD license):
+;;
+;;
+;; Copyright (c) 2010, arikui <arikui.ruby@gmail.com>
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;;  * Redistributions of source code must retain the above copyright notice,
+;;    this list of conditions and the following disclaimer.
+;;  * Redistributions in binary form must reproduce the above copyright notice,
+;;    this list of conditions and the following disclaimer in the documentation
+;;    and/or other materials provided with the distribution.
+;;  * Neither the name of the nscr-mode nor the names of its contributors
+;;    may be used to endorse or promote products derived from this software
+;;    without specific prior written permission.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
 
 (provide "nscr-mode")
 
@@ -25,13 +62,12 @@
 	  nscr-run
 	  ))
 
-;;; public special variables
+;; public special variables
 (defvar *nscr-mode-hook*         nil         "Hook for nscr-mode")
 (defvar *nscr-mode-map*          nil         "Keymap for nscr-mode")
 (defvar *nscr-mode-syntax-table* nil         "Syntax table for nscr-mode")
 (defvar *nscr-mode-abbrev-table* nil         "Abbrev table for nscr-mode")
 (defvar *nscr-prog*              "nscr.exe"  "NScripter executable basename")
-
 
 (unless *nscr-mode-map*
   (let ((m (make-sparse-keymap)))
@@ -46,7 +82,7 @@
     (set-syntax-word s #\_)
     (setf *nscr-mode-syntax-table* s)))
 
-;;; private special variables
+;; private special variables
 (defvar *keywords*            nil)
 (defvar *keyword-file*        "Nscr")
 (defvar *regexp-keyword-list* nil)
@@ -69,7 +105,6 @@
       ;; ruby
       ("([^)/]+/[^)]+)" nil 9)
       ))))
-
 
 (defun nscr-mode ()
   "Major mode for editing NScripter scripts."
