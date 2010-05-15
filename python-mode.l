@@ -155,7 +155,6 @@
   (setf mode-specific-indent-command 'python-indent-line)
   (make-local-variable 'ed::build-summary-function)
   (setf ed::build-summary-function 'python-build-summary)
-  
   (run-hooks '*python-mode-hook*))
 
 
