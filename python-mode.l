@@ -1,58 +1,58 @@
-;;; -*- Mode: Lisp; Package: Python; encoding: sjis -*-
-;;;
-;;; This files is not part of xyzzy.
-;;;
-;;; = python-mode.l
-;;; 
-;;; == Install
-;;; 
-;;; (1) Put python-mode.l on /site-lisp
-;;; (2) At .xyzzy
-;;;     
-;;;      (require "python-mode")
-;;;      (push '("\\.py$" . python-mode) *auto-mode-alist*)
-;;; 
-;;; == Usage
-;;; 
-;;; : C-Tab
-;;;   Unindent 1 level current line.
-;;; : C-c x
-;;;   Execute editing file by Python.
-;;;   When with prefix argument, input script arguments interactively.
-;;; 
-;;; 
-;;; == License
-;;;
-;;; Distributes under following terms (modified BSD license):
-;;;
-;;;
-;;; Copyright (c) 2009, arikui <arikui.ruby@gmail.com>
-;;; All rights reserved.
-;;;
-;;; Redistribution and use in source and binary forms, with or without
-;;; modification, are permitted provided that the following conditions are met:
-;;;
-;;;  * Redistributions of source code must retain the above copyright notice,
-;;;    this list of conditions and the following disclaimer.
-;;;  * Redistributions in binary form must reproduce the above copyright notice,
-;;;    this list of conditions and the following disclaimer in the documentation
-;;;    and/or other materials provided with the distribution.
-;;;  * Neither the name of the arikui-python-mode nor the names of its contributors
-;;;    may be used to endorse or promote products derived from this software
-;;;    without specific prior written permission.
-;;;
-;;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-;;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-;;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-;;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-;;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-;;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-;;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-;;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-;;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-;;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-;;; POSSIBILITY OF SUCH DAMAGE.
-;;;
+;; -*- Mode: Lisp; Package: Python; encoding: sjis -*-
+;;
+;; This files is not part of xyzzy.
+;;
+;; = python-mode.l
+;;
+;; == Install
+;;
+;; (1) Put python-mode.l on /site-lisp
+;; (2) At .xyzzy
+;;     
+;;      (require "python-mode")
+;;      (push '("\\.py$" . python-mode) *auto-mode-alist*)
+;;
+;; == Usage
+;;
+;; : C-Tab
+;;   Unindent 1 level current line.
+;; : C-c x
+;;   Execute editing file by Python.
+;;   When with prefix argument, input script arguments interactively.
+;;
+;;
+;; == License
+;;
+;; Distributes under following terms (modified BSD license):
+;;
+;;
+;; Copyright (c) 2009, arikui <arikui.ruby@gmail.com>
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;;  * Redistributions of source code must retain the above copyright notice,
+;;    this list of conditions and the following disclaimer.
+;;  * Redistributions in binary form must reproduce the above copyright notice,
+;;    this list of conditions and the following disclaimer in the documentation
+;;    and/or other materials provided with the distribution.
+;;  * Neither the name of the arikui-python-mode nor the names of its contributors
+;;    may be used to endorse or promote products derived from this software
+;;    without specific prior written permission.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
 
 
 (provide "python-mode")
@@ -74,7 +74,7 @@
 	  python-run-with-edited))
 
 
-;;; general purpose functions
+;; general purpose functions
 (defun curry (fn &rest args)
   (lambda (&rest rest-args)
     (apply fn (append args rest-args))))
@@ -86,7 +86,7 @@
     (f n nil)))
 
 
-;;; public special variables
+;; public special variables
 (defvar *python-mode-hook* nil)
 (defvar *python-mode-map* nil)
 (defvar *python-mode-syntax-table* nil)
@@ -94,7 +94,7 @@
 (defvar *python-prog* "python")
 
 
-;;; private special variables
+;; private special variables
 (defvar *keywords* nil)
 (defvar *keyword-file* "Python")
 (defvar *runner-history* nil)
@@ -107,7 +107,7 @@
   "^[ \t]*\\(class\\|def\\)\\>.*$")
 
 
-;;; initialize and memonize
+;; initialize and memonize
 (unless *python-mode-map*
   (let ((m (make-sparse-keymap)))
     (setf *python-mode-map* m)
@@ -138,7 +138,7 @@
   (define-abbrev-table '*python-mode-abbrev-table*))
 
 
-;;; entry point
+;; entry point
 (defun python-mode ()
   (interactive)
   (kill-all-local-variables)
@@ -211,7 +211,7 @@
       (f nil))))
 
 
-;;; runner
+;; runner
 (defun python-run (args)
   (interactive "sARGS: ")
   (pipe-command (concat *python-prog* " " args)))
