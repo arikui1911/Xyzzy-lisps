@@ -1,58 +1,58 @@
-;;; -*- Mode: Lisp; Package: RD; encoding: sjis -*-
-;;; 
-;;; This files is not part of xyzzy.
-;;;
-;;;
-;;; = rd-mode.l
-;;; 
-;;; == Install
-;;; 
-;;; (1) Put rd-mode.l on /site-lisp
-;;; (2) At .xyzzy
-;;;     
-;;;      (require "rd-mode")
-;;;      (push '("\\.rd$" . rd-mode) *auto-mode-alist*)
-;;; 
-;;; 
-;;; == Features
-;;; 
-;;;  * Syntax color hilighting
-;;;  * Input helper commands
-;;;  * Preview document which compiled to HTML (depend on browserex)
-;;; 
-;;; 
-;;; == License
-;;;
-;;; Distributes under following terms (modified BSD license):
-;;;
-;;;
-;;; Copyright (c) 2009, arikui <arikui.ruby@gmail.com>
-;;; All rights reserved.
-;;;
-;;; Redistribution and use in source and binary forms, with or without
-;;; modification, are permitted provided that the following conditions are met:
-;;;
-;;;  * Redistributions of source code must retain the above copyright notice,
-;;;    this list of conditions and the following disclaimer.
-;;;  * Redistributions in binary form must reproduce the above copyright notice,
-;;;    this list of conditions and the following disclaimer in the documentation
-;;;    and/or other materials provided with the distribution.
-;;;  * Neither the name of the arikui-rd-mode nor the names of its contributors
-;;;    may be used to endorse or promote products derived from this software
-;;;    without specific prior written permission.
-;;;
-;;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-;;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-;;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-;;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-;;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-;;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-;;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-;;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-;;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-;;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-;;; POSSIBILITY OF SUCH DAMAGE.
-;;;
+;; -*- Mode: Lisp; Package: RD; encoding: sjis -*-
+;; 
+;; This files is not part of xyzzy.
+;;
+;;
+;; = rd-mode.l
+;; 
+;; == Install
+;; 
+;; (1) Put rd-mode.l on /site-lisp
+;; (2) At .xyzzy
+;;     
+;;      (require "rd-mode")
+;;      (push '("\\.rd$" . rd-mode) *auto-mode-alist*)
+;; 
+;; 
+;; == Features
+;; 
+;;  * Syntax color hilighting
+;;  * Input helper commands
+;;  * Preview document which compiled to HTML (depend on browserex)
+;; 
+;; 
+;; == License
+;;
+;; Distributes under following terms (modified BSD license):
+;;
+;;
+;; Copyright (c) 2009, arikui <arikui.ruby@gmail.com>
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;;  * Redistributions of source code must retain the above copyright notice,
+;;    this list of conditions and the following disclaimer.
+;;  * Redistributions in binary form must reproduce the above copyright notice,
+;;    this list of conditions and the following disclaimer in the documentation
+;;    and/or other materials provided with the distribution.
+;;  * Neither the name of the arikui-rd-mode nor the names of its contributors
+;;    may be used to endorse or promote products derived from this software
+;;    without specific prior written permission.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
 
 (provide "rd")
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -91,13 +91,13 @@
           ))
 
 
-;;; public special variables
+;; public special variables
 (defvar *rd-mode-hook* nil "rd-mode起動時のフック")
 (defvar *rd-mode-map* nil "rd-mode用キーマップ")
 (defvar *regexp-keyword-list* nil "rd-mode構文ハイライト")
 
 
-;;; initialize and memonize
+;; initialize and memonize
 (unless *rd-mode-map*
   (setf *rd-mode-map* (make-sparse-keymap))
   (define-key *rd-mode-map* #\TAB 'rd-indent-line)
@@ -224,8 +224,8 @@
        (interactive)
        (input-inline ,opener ,closer ,prompt str))))
 
-;;; rd-inline-xxx は セレクションやリージョンを Inline 要素 xxx として囲い、
-;;; rd-inline-input-xxx はミニバッファに内容を入力して、要素をバッファに挿入します。
+;; rd-inline-xxx は セレクションやリージョンを Inline 要素 xxx として囲い、
+;; rd-inline-input-xxx はミニバッファに内容を入力して、要素をバッファに挿入します。
 (def-inline-command rd-inline-em    rd-inline-input-em    "((*" "*))" "Em: ")
 (def-inline-command rd-inline-code  rd-inline-input-code  "(({" "}))" "Code: ")
 (def-inline-command rd-inline-var   rd-inline-input-var   "((|" "|))" "Var: ")
@@ -235,16 +235,16 @@
 (def-inline-command rd-inline-note  rd-inline-input-note  "((-" "-))" "Note: ")
 (def-inline-command rd-inline-verb  rd-inline-input-verb  "(('" "'))" "Verb: ")
 
-;;; Link の 表示文字列にエスケープが必要な場合、ダブルクォーテーションでエスケープします。
+;; Link の 表示文字列にエスケープが必要な場合、ダブルクォーテーションでエスケープします。
 (defun inline-link-caption-escape (org)
   (if (string-match "[|/]" org) (format nil "\"~A\"" org) org))
 
-;;; URL と、必要ならリンクを張る表示文字列をミニバッファに入力し、
-;;; Link を バッファに挿入します。
-;;;
-;;; 本来、表示文字列に "|" や "/" を用いるにはエスケープが必要ですが、
-;;; この関数は必要なら勝手にエスケープしてくれます。
-;;;
+;; URL と、必要ならリンクを張る表示文字列をミニバッファに入力し、
+;; Link を バッファに挿入します。
+;;
+;; 本来、表示文字列に "|" や "/" を用いるにはエスケープが必要ですが、
+;; この関数は必要なら勝手にエスケープしてくれます。
+;;
 (defun rd-inline-link-wizard (url caption)
   (interactive "sURL: \nsCaption: ")
   (rd-inline-input-link (if (zerop (length caption))
@@ -254,11 +254,11 @@
 (defvar *reference-history* nil)
 (setf (get '*reference-history* 'ed::minibuffer-history-variable) '*reference-history*)
 
-;;; ミニバッファに RD の Label を入力し、 Reference をバッファに挿入します。
-;;;
-;;; Label 名には補完が効きます。また、履歴が効かない代わりに、バッファ内の Label が
-;;; 履歴の要領で選択できます。
-;;;
+;; ミニバッファに RD の Label を入力し、 Reference をバッファに挿入します。
+;;
+;; Label 名には補完が効きます。また、履歴が効かない代わりに、バッファ内の Label が
+;; 履歴の要領で選択できます。
+;;
 (defun rd-inline-reference-wizard ()
   (interactive)
   (let ((rd-labels (list-labels)))
@@ -268,20 +268,20 @@
       (completing-read "Label: " rd-labels
                        :history '*reference-history*)))))
 
-;;; RD の Label になりうるもの (Headline, DescList term, MethodList term) を集めます。
+;; RD の Label になりうるもの (Headline, DescList term, MethodList term) を集めます。
 (defun list-labels ()
   (mapcar #'second
           (collect-matched-lines
            "^\\(=\\{1,4\\}\\|\\+\\{1,2\\}\\|[ \t]*:\\|[ \t]*---\\)[ \t]*\\(.*?\\)$" 2)))
 
-;;; list-function 用。 Headline だけを捜します。
+;; list-function 用。 Headline だけを捜します。
 (defun build-summary-labels ()
   (collect-matched-lines "^\\(=\\{1,4\\}\\|\\+\\{1,2\\}\\)[ \t]*\\(.*?\\)$" 2))
 
-;;; 正規表現を用いて行情報を集めます。
-;;;
-;;; 行情報: (list 行番号 (match-string (first regnums)) (match-string (second regnums)) ... )
-;;;
+;; 正規表現を用いて行情報を集めます。
+;;
+;; 行情報: (list 行番号 (match-string (first regnums)) (match-string (second regnums)) ... )
+;;
 (defun collect-matched-lines (re &rest regnums)
   (save-excursion
     (goto-char (point-min))
@@ -296,11 +296,11 @@
         (nreverse (f lst))))))
 
 
-;;; Table of Contents として使える ItemList を挿入します。
-;;; 内容は Headline の Label への Reference 集です。
-;;;
-;;; 集められる Headline は レベルが 4 以上のものですが、この下限は前置引数で変更できます。
-;;;
+;; Table of Contents として使える ItemList を挿入します。
+;; 内容は Headline の Label への Reference 集です。
+;;
+;; 集められる Headline は レベルが 4 以上のものですが、この下限は前置引数で変更できます。
+;;
 (defun rd-insert-toc (&optional (arg 4))
   (interactive "p")
   (let ((current-level 0))
@@ -336,8 +336,8 @@
 
 (defvar *rd-preview-style* nil "ブラウザプレビューに適用するCSS")
 
-;;; 編集中の RD の変換結果を、
-;;; browserex を利用して、ブラウザと RDtool でプレビューする
+;; 編集中の RD の変換結果を、
+;; browserex を利用して、ブラウザと RDtool でプレビューする
 (defun rd-browser-preview ()
   (interactive)
   (need-browserex)
