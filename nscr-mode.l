@@ -7,7 +7,8 @@
 ;; == Install
 ;;
 ;; (1) Put nscr-mode.l on /site-lisp
-;; (2) At ~/.xyzzy
+;; (2) Put Nscr on /etc 
+;; (3) At ~/.xyzzy
 ;;      (require "nscr-mode")
 ;;      (add-hook '*find-file-hooks* 'nscr-mode-auto-boot-on-find-file-if-find-nscr-executable)
 ;;
