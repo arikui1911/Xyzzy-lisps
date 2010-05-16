@@ -126,6 +126,19 @@
 	(indent-to col)))))
 
 
+(defun build-summary ()
+  (save-excursion
+    (goto-char (point-min))
+    (labels ((f (acc)
+	       (if (re-search-forward "^[ \t]*\\*.*$" t)
+		   (progn
+		     (push (list (current-line-number) (match-string 0)) acc)
+		     (goto-char (match-end 0))
+		     (f acc))
+		 (nreverse acc))))
+      (f nil))))
+
+
 (defun nscr-mode ()
   "Major mode for editing NScripter scripts."
   (interactive)
@@ -139,6 +152,8 @@
   (setf regexp-keyword-list *regexp-keyword-list*)
   (make-local-variable 'mode-specific-indent-command)
   (setf mode-specific-indent-command 'do-indent)
+  (make-local-variable 'ed::build-summary-function)
+  (setf ed::build-summary-function 'build-summary)
   (run-hooks *nscr-mode-hook*))
 
 
